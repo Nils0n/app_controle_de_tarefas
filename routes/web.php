@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TarefaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,3 +21,17 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::middleware('auth')->group(function(){
+
+    Route::prefix('tarefa')->group(function(){
+        Route::get('/' , [TarefaController::class , 'index'])->name('app.tarefa.index');
+        Route::get('/create' , [TarefaController::class , 'create'])->name('app.tarefa.create');
+        Route::post('/create' , [TarefaController::class , 'store'])->name('app.tarefa.store');
+        Route::get('/edit/{id}' , [TarefaController::class , 'edit'])->name('app.tarefa.edit');
+        Route::put('/edit/{id}' , [TarefaController::class , 'update'])->name('app.tarefa.update');
+        Route::delete('/delete', [TarefaController::class , 'destroy'])->name('app.tarefa.destroy');
+    });
+
+
+});
